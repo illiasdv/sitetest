@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Слайд-шоу</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        #slide-box {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            overflow: hidden;
+            margin: 20px;
+            border-radius: 15px;
+            padding: 50px;
+        }
+
+        .slide-container {
+    display: flex;
+    transition: transform 1s ease-in-out; /* Плавний перехід */
+    overflow: hidden; /* Заборона видимості перевищуючих частин слайдів */
+}
+
+.slide {
+    flex: 0 0 100%;
+}
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            border: none;
+            padding: 0;
+            border-radius: 15px;
+        }
+
+        .controls {
+            text-align: center;
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+        }
+
+        .control-btn {
+            display: inline-block;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            margin: 0 5px;
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-column" id="slide-box">
+        <h4>ANTES/DESPUES</h4>
+        <div class="slide-container">
+            <div class="slide">
+                <img src="D:\I am programist!!!\Limpi.online\limpi_site3\images\slide\slide1.JPEG" alt="Слайд 1">
+            </div>
+            <div class="slide">
+                <img src="D:\I am programist!!!\Limpi.online\limpi_site3\images\slide\slide2.JPEG" alt="Слайд 2">
+            </div>
+            <div class="slide">
+                <img src="D:\I am programist!!!\Limpi.online\limpi_site3\images\slide\slide3.JPEG" alt="Слайд 3">
+            </div>
+            <div class="slide">
+                <img src="D:\I am programist!!!\Limpi.online\limpi_site3\images\slide\slide4.JPEG" alt="Слайд 4">
+            </div>
+        </div>
+        <div class="controls">
+            <span class="control-btn" id="prevButton">&#10094;</span>
+            <span class="control-btn" id="nextButton">&#10095;</span>
+        </div>
+    </div>
+
+    <script>
+        let slideIndex = 0;
+        const slides = document.querySelectorAll(".slide");
+        const slideContainer = document.querySelector(".slide-container");
+        let timer;
+
+        function showSlide(n) {
+            slides.forEach((slide, index) => {
+                if (index === n) {
+                    $(slide).fadeIn(1000);
+                } else {
+                    $(slide).fadeOut(1000);
+                }
+            });
+        }
+
+        function nextSlide() {
+            slideIndex++;
+            if (slideIndex >= slides.length) {
+                slideIndex = 0;
+            }
+            showSlide(slideIndex);
+        }
+
+        function prevSlide() {
+            slideIndex--;
+            if (slideIndex < 0) {
+                slideIndex = slides.length - 1;
+            }
+            showSlide(slideIndex);
+        }
+
+        function startSlideShow() {
+            timer = setInterval(nextSlide, 3000);
+        }
+
+        function stopSlideShow() {
+            clearInterval(timer);
+        }
+
+        showSlide(slideIndex);
+        startSlideShow();
+
+        document.getElementById("slide-box").addEventListener("mouseenter", () => {
+            stopSlideShow();
+        });
+
+        document.getElementById("slide-box").addEventListener("mouseleave", () => {
+            startSlideShow();
+        });
+    </script>
+</body>
+</html>
